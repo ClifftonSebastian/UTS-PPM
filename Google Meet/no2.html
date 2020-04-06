@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UTS PPM C14180041</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript">
+		var total=0;
+		function input(){
+			alert("Input Berhasil");
+			var jumlah = $("#pinjaman").val();
+			var lamapinjam= $("#lama").val();
+			var hasil;
+			if($.isNumeric(parseInt(jumlah))){
+				if(jumlah >0 && lamapinjam>0){
+					jumlah = parseInt(jumlah);
+					if(lamapinjam>=1 && lamapinjam<=6){
+					   hasil=jumlah+(jumlah*(2/100)*6)
+					   $("#hasilinputan").empty();
+					   $("#hasilinputan2").empty();
+					   $("#hasilinputan").append("Pinjaman = Rp. "+jumlah);
+					   $("#hasilinputan2").append("Total Pengembalian"+jumlah+"+ ("+jumlah+" * 2% * "+lamapinjam+" ) = "+hasil);
+					   addtoList(hasil,lamapinjam);
+					  }
+					  else if(lamapinjam>=7 && lamapinjam<=12)
+					  {
+					   hasil=jumlah+(jumlah*(1.5/100)*6)
+					   $("#hasilinputan").empty();
+					   $("#hasilinputan2").empty();
+					   $("#hasilinputan").append("Pinjaman = Rp. "+jumlah);
+					   $("#hasilinputan2").append("Total Pengembalian : "+jumlah+"+ ("+jumlah+" * 1.5% * "+lamapinjam+" ) = Rp. "+hasil);
+					   addtoList(hasil,lamapinjam);
+					  }
+					  else
+					  {
+					   hasil=jumlah+(jumlah*(1/100)*6)
+					   $("#hasilinputan").empty();
+					   $("#hasilinputan2").empty();
+					   $("#hasilinputan").append("Pinjaman = Rp. "+jumlah);
+					   $("#hasilinputan2").append("Total Pengembalian : "+jumlah+"+ ("+jumlah+" * 1% * "+lamapinjam+" ) = "+hasil);		
+					   addtoList(hasil,lamapinjam);	
+					  }
+				}
+				else{
+					alert("Inputan Jumlah Pinjaman / Lama Pinjaman tidak valid");
+				}
+			}
+			else{
+				alert("Inputan Jumlah Pinjaman tidak valid");
+			}
+		}
+		function addtoList(jumlah, lama){
+			total=total+1;
+			$("#listpinjaman").append("<h4>Pinjaman - "+total+"</h4><ul>");
+			var perbulan =jumlah/lama;
+			var i;
+			for (i = 1; i <= lama; i++) {
+			  $("#listpinjaman").append("<li>Bulan ke "+i+" : Rp. "+perbulan.toFixed(2)+"</li>");
+			}
+			$("#listpinjaman").append("</ul");
+		}
+		$( document ).on( "pageinit", "#page1", function( event ) {
+		  alert( "Welcome to my Koperasi!" );
+		});
+		$(function(){
+		    // Bind the swiperightHandler callback function to the swipe event on div.box
+		  $( "div.bod" ).on( "swiperight", swiperightHandler() );
+		 
+		  // Callback function references the event target and adds the 'swiperight' class to it
+		  function swiperightHandler( event ){
+		    $( "div.bod" ).style("background-color: black");
+		  }
+		});
+	</script>
+</head>
+<body>
+	<div data-role="page" id="page1">
+		<div data-role="header">
+			<h1>Halaman Input Pinjaman</h1>
+		</div>
+		<div data-role="navbar">
+		    <ul>
+		        <li><a href="#page1" class="ui-btn-active">Input Pinjaman</a></li>
+		        <li><a href="#page2">List Pinjaman</a></li>
+		    </ul>
+		</div>
+		<div data-role="main" class="ui-content" id="bod">
+			<label for="text-basic">Jumlah Pinjaman:</label>
+            <input id="pinjaman" type="number" name="text-basic" value="0">
+            <label for="slider-fill">Lama Pinjaman:</label>
+            <input id = "lama" type="range" name="slider-fill" value="0" min="0" max="36" step="1" data-highlight="true">
+			<input type="button" id="buttoninput" onclick="input()" value="Input">
+			<div id="hasilinputan"></div>
+			<div id="hasilinputan2"></div>
+			<a href="#page2" data-transition="slide" style="float: right">Page 2</a>
+		</div>
+		<div data-role="footer">
+			<h2>UTS PPM ~ Cliffton Sebastian ~ C14180041</h2>
+		</div>
+	</div>
+	<div data-role="page" id="page2">
+		<div data-role="header" id="list">
+			<h1>Halaman List Detail Pinjaman</h1>
+		</div>
+		<div data-role="navbar">
+		    <ul>
+		        <li><a href="#page1">Input Pinjaman</a></li>
+		        <li><a href="#page2" class="ui-btn-active">List Pinjaman</a></li>
+		    </ul>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div id="listpinjaman">
+				<h3>List Pinjaman</h3>
+			</div>
+			<a href="#page1" data-transition="slide" style="float: right">Page 1</a>
+		</div>
+		<div data-role="footer">
+			<h2>UTS PPM ~ Cliffton Sebastian ~ C14180041</h2>
+		</div>
+	</div>
+</body>
+</html>
